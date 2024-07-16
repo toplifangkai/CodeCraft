@@ -1,22 +1,27 @@
 /ERROR/ && /Exception/ {
 	desc=$0;
 	getline;
-	exk=$0;
-	map[exk]=desc;
-	tmap[exk]++;
+	firstKey=$0;
 	nextl=$0;
 
-	if(!smap[exk]) {
-		while(match(nextl, "\tat") || match(nextl, "Caused by:")) {
-			smap[exk]=smap[exk] ? smap[exk]"\n"$0 : $0;
-			getline;
-			nextl=$0
+	while(match(nextl, "\tat") || match(nextl, "Caused by:")) {
+		stack=stack ? stack"\n"$0 : $0;
+		if(!key && match(nextl, "igg")) {
+			key = firstKey""nextl
 		}
+		getline;
+		nextl=$0
 	}
-	
+	if(!stackMap[key]) {
+		stackMap[key] = stack
+		descMap[key] = desc
+	}
+	countMap[key]++
+	key = ""
+	stack = ""
 }
 END {
-	for(k in smap){
-		print tmap[k] " times " map[k] "\n" smap[k]
+	for(k in stackMap){
+		print countMap[k] " times " descMap[k] "\n" stackMap[k] "\n"
 	}
 }
