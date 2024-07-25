@@ -4,7 +4,7 @@
 	if(P1) {
 		split($2, hms, /:/)
 		switch(P1) {
-			case "H"：
+			case "H":
 				t = t"-"hms[1]
 				break
 			case "M":
