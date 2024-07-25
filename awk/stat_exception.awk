@@ -18,14 +18,14 @@
 	}
 	getline;
 	firstKey=$0;
-	if(match(firstKey, "igg")) {
+	if(match(firstKey, "xxx")) {
 		key = firstKey
 	}
 	nextl=$0;
 
 	while(match(nextl, "\tat") || match(nextl, "Caused by:")) {
 		stack=stack ? stack"\n"$0 : $0;
-		if(!key && match(nextl, "igg")) {
+		if(!key && match(nextl, "xxx")) {
 			key = firstKey""nextl
 		}
 		getline;
